@@ -1,5 +1,1 @@
-import { nav } from './nav';
-
-export const initComponents = () => {
-  nav();
-};
+export const initComponents = () => {};

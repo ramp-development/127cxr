@@ -1,10 +1,7 @@
-import { groups } from './groups';
-import { mouse } from './mouse';
-import { nav } from './nav';
+import { scroll } from './scroll';
+import { scrollFlip } from './utils/timothyRicks';
 
 export const animations = () => {
-  // setTimeout(groups, 1000);
-  mouse();
-  nav();
-  groups();
+  scrollFlip();
+  scroll();
 };
