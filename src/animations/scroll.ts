@@ -79,7 +79,7 @@ export const scroll = () => {
   const createMasterTimeline = (): void => {
     if (masterTl) masterTl.kill();
 
-    gsap.matchMedia().add(`(min-width: 992px)`, function () {
+    gsap.matchMedia().add(`(min-width: 2px)`, function () {
       masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: track,
@@ -140,7 +140,7 @@ export const scroll = () => {
   const createFooterTimeline = (): void => {
     if (footerTl) footerTl.kill();
 
-    gsap.matchMedia().add(`(min-width: 992px)`, function () {
+    gsap.matchMedia().add(`(min-width: 2px)`, function () {
       footerTl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
