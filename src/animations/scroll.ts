@@ -9,14 +9,10 @@ import { queryElements } from '$utils/queryElements';
 import { splitLines } from './utils';
 
 export const scroll = () => {
-  console.log('scroll');
-
   const track = queryElement<HTMLDivElement>('.page-track');
   if (!track) return;
   const sticky = queryElement<HTMLDivElement>('.page-sticky', track);
   if (!sticky) return;
-
-  console.log('pre');
 
   // hero components
   const heroAttr = 'data-hero';
@@ -27,8 +23,6 @@ export const scroll = () => {
   const heroTitle = queryElement<HTMLHeadingElement>(`[${heroAttr}="title"]`, hero);
   const heroSub = queryElement<HTMLHeadingElement>(`[${heroAttr}="sub"]`, hero);
   if (!hero || !heroLeftSVGs || !heroCenterSVGs || !heroRightSVGs || !heroTitle || !heroSub) return;
-
-  console.log('hero');
 
   // info components
   const infoAttr = 'data-info';
@@ -41,15 +35,11 @@ export const scroll = () => {
   if (!info || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron || !infoCross)
     return;
 
-  console.log('info');
-
   // gallery components
   const galleryAttr = 'data-gallery';
   const gallery = queryElement<HTMLDivElement>(`[${galleryAttr}="component"]`, sticky);
   const gallerySlider = queryElement<HTMLDivElement>(`[${galleryAttr}="slider"]`, gallery);
   if (!gallery || !gallerySlider) return;
-
-  console.log('gallery');
 
   // footer components
   const footerAttr = 'data-footer';
@@ -69,8 +59,6 @@ export const scroll = () => {
     !footerCross
   )
     return;
-
-  console.log('footer');
 
   let masterTl: gsap.core.Timeline | null = null,
     footerTl: gsap.core.Timeline | null = null,
