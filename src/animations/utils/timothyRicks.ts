@@ -18,7 +18,7 @@ export const scrollFlip = (): void => {
   const createTimeline = (): void => {
     if (timeline) timeline.kill();
 
-    gsap.matchMedia().add(`(min-width: 2px)`, function () {
+    gsap.matchMedia().add(`(min-width: 992px)`, function () {
       const state = Flip.getState(logoStart);
 
       timeline = gsap.timeline({
