@@ -22,7 +22,7 @@ export const scroll = () => {
   const heroRightSVGs = queryElements<HTMLImageElement>(`[${heroAttr}="svg-right"]`, hero);
   const heroTitle = queryElement<HTMLHeadingElement>(`[${heroAttr}="title"]`, hero);
   const heroSub = queryElement<HTMLHeadingElement>(`[${heroAttr}="sub"]`, hero);
-  if (!hero || !heroLeftSVGs || !heroCenterSVGs || !heroRightSVGs || !heroTitle || !heroSub) return;
+  // if (!hero || !heroLeftSVGs || !heroCenterSVGs || !heroRightSVGs || !heroTitle || !heroSub) return;
 
   // info components
   const infoAttr = 'data-info';
@@ -32,14 +32,14 @@ export const scroll = () => {
   const infoLeftChevron = queryElement<HTMLImageElement>(`[${infoAttr}="chevron-left"]`, info);
   const infoRightChevron = queryElement<HTMLImageElement>(`[${infoAttr}="chevron-right"]`, info);
   const infoCross = queryElement<HTMLImageElement>(`[${infoAttr}="cross"]`, info);
-  if (!info || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron || !infoCross)
-    return;
+  // if (!info || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron || !infoCross)
+  //   return;
 
   // gallery components
   const galleryAttr = 'data-gallery';
   const gallery = queryElement<HTMLDivElement>(`[${galleryAttr}="component"]`, sticky);
   const gallerySlider = queryElement<HTMLDivElement>(`[${galleryAttr}="slider"]`, gallery);
-  if (!gallery || !gallerySlider) return;
+  // if (!gallery || !gallerySlider) return;
 
   // footer components
   const footerAttr = 'data-footer';
@@ -50,15 +50,15 @@ export const scroll = () => {
   const footerChevron2 = queryElement<HTMLDivElement>(`[${footerAttr}="chevron2"]`, footer);
   const footerCross = queryElement<HTMLDivElement>(`[${footerAttr}="cross"]`, footer);
   const partnerAttr = 'data-partner';
-  if (
-    !footer ||
-    !footerTitle ||
-    !footerPartners ||
-    !footerChevron1 ||
-    !footerChevron2 ||
-    !footerCross
-  )
-    return;
+  // if (
+  //   !footer ||
+  //   !footerTitle ||
+  //   !footerPartners ||
+  //   !footerChevron1 ||
+  //   !footerChevron2 ||
+  //   !footerCross
+  // )
+  //   return;
 
   let masterTl: gsap.core.Timeline | null = null,
     footerTl: gsap.core.Timeline | null = null,
@@ -78,12 +78,15 @@ export const scroll = () => {
       });
 
       const heroTl = () => {
+        if (!hero) return;
         const timeline = gsap.timeline();
         timeline.to(hero, { opacity: 0, duration: 0.75 });
         return timeline;
       };
 
       const infoTl = () => {
+        if (!info || !infoCross || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron)
+          return;
         const timeline = gsap
           .timeline({
             onStart: () => {
@@ -107,6 +110,7 @@ export const scroll = () => {
       };
 
       const galleryTl = () => {
+        if (!gallery || !gallerySlider) return;
         const timeline = gsap
           .timeline({
             onStart: () => {
@@ -129,6 +133,15 @@ export const scroll = () => {
     if (footerTl) footerTl.kill();
 
     gsap.matchMedia().add(`(min-width: 2px)`, function () {
+      if (
+        !footer ||
+        !footerTitle ||
+        !footerPartners ||
+        !footerChevron1 ||
+        !footerChevron2 ||
+        !footerCross
+      )
+        return;
       footerTl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,

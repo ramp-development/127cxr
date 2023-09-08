@@ -1,1 +1,5 @@
-export const initComponents = () => {};
+import { gallery } from './gallery';
+
+export const components = () => {
+  gallery();
+};
