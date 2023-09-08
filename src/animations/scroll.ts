@@ -39,6 +39,7 @@ export const scroll = () => {
   const galleryAttr = 'data-gallery';
   const gallery = queryElement<HTMLDivElement>(`[${galleryAttr}="component"]`, sticky);
   const gallerySlider = queryElement<HTMLDivElement>(`[${galleryAttr}="slider"]`, gallery);
+  // const gallerySlider = queryElement<HTMLDivElement>(`[${galleryAttr}="slider"]`, gallery);
   // if (!gallery || !gallerySlider) return;
 
   // footer components
@@ -67,7 +68,57 @@ export const scroll = () => {
   const createMasterTimeline = (): void => {
     if (masterTl) masterTl.kill();
 
-    gsap.matchMedia().add(`(min-width: 2px)`, function () {
+    const heroTl = () => {
+      if (!hero) return;
+      const timeline = gsap.timeline();
+      timeline.to(hero, { opacity: 0, duration: 0.75 });
+      return timeline;
+    };
+
+    const infoTl = () => {
+      if (!info || !infoCross || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron)
+        return;
+      const timeline = gsap
+        .timeline({
+          onStart: () => {
+            info.style.display = 'flex';
+          },
+          onReverseComplete: () => {
+            info.style.removeProperty('display');
+          },
+        })
+        .to(info, { opacity: 1 })
+        .from(infoCross, { scale: 1.5 }, '<')
+        .from(infoLeftChevron, { xPercent: -100 }, '<')
+        .from(infoRightChevron, { xPercent: 100 }, '<');
+
+      splitLines(infoTitle, timeline, '<');
+      splitLines(infoSub, timeline, '<0.1');
+
+      timeline.to(info, { opacity: 0, duration: 0.75 });
+
+      return timeline;
+    };
+
+    const galleryTl = () => {
+      if (!gallery || !gallerySlider) return;
+      const timeline = gsap
+        .timeline({
+          onStart: () => {
+            gallery.style.display = 'flex';
+          },
+          onReverseComplete: () => {
+            gallery.style.removeProperty('display');
+          },
+        })
+        .to(gallery, { opacity: 1 })
+        .from(gallerySlider, { xPercent: 10 }, '<');
+      return timeline;
+    };
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 992px)', () => {
       masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: track,
@@ -77,62 +128,16 @@ export const scroll = () => {
         },
       });
 
-      const heroTl = () => {
-        if (!hero) return;
-        const timeline = gsap.timeline();
-        timeline.to(hero, { opacity: 0, duration: 0.75 });
-        return timeline;
-      };
-
-      const infoTl = () => {
-        if (!info || !infoCross || !infoTitle || !infoSub || !infoLeftChevron || !infoRightChevron)
-          return;
-        const timeline = gsap
-          .timeline({
-            onStart: () => {
-              info.style.display = 'flex';
-            },
-            onReverseComplete: () => {
-              info.style.removeProperty('display');
-            },
-          })
-          .to(info, { opacity: 1 })
-          .from(infoCross, { scale: 1.5 }, '<')
-          .from(infoLeftChevron, { xPercent: -100 }, '<')
-          .from(infoRightChevron, { xPercent: 100 }, '<');
-
-        splitLines(infoTitle, timeline, '<');
-        splitLines(infoSub, timeline, '<0.1');
-
-        timeline.to(info, { opacity: 0, duration: 0.75 });
-
-        return timeline;
-      };
-
-      const galleryTl = () => {
-        if (!gallery || !gallerySlider) return;
-        const timeline = gsap
-          .timeline({
-            onStart: () => {
-              gallery.style.display = 'flex';
-            },
-            onReverseComplete: () => {
-              gallery.style.removeProperty('display');
-            },
-          })
-          .to(gallery, { opacity: 1 })
-          .from(gallerySlider, { xPercent: 10 }, '<');
-        return timeline;
-      };
-
       masterTl.add(heroTl()).add(infoTl(), '>-0.25').add(galleryTl(), '>-0.25');
     });
+
+    gsap.matchMedia().add(`(min-width: 992px)`, function () {});
   };
 
   const createFooterTimeline = (): void => {
     if (footerTl) footerTl.kill();
 
-    gsap.matchMedia().add(`(min-width: 2px)`, function () {
+    gsap.matchMedia().add(`(min-width: 992px)`, function () {
       if (
         !footer ||
         !footerTitle ||
